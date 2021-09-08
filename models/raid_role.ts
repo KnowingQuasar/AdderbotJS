@@ -13,7 +13,7 @@ class RaidRole {
     }
 }
 
-let raidRoles = [
+const raidRoles: RaidRole[] = [
     new RaidRole("T", "Tank"),
     new RaidRole("MT", "Main Tank"),
     new RaidRole("OT", "Off Tank"),
@@ -27,12 +27,12 @@ let raidRoles = [
     new RaidRole("DPS", "Damage Dealer"),
     new RaidRole("RDPS", "Ranged Damage Dealer"),
     new RaidRole("MDPS", "Melee Damage Dealer"),
-    new RaidRole("CRO", "Necromancer Damage Dealer"),
-    new RaidRole("ALT DPS", "Backup Damage Dealer"),
-    new RaidRole("ALT MDPS", "Backup Melee Damage Dealer"),
-    new RaidRole("ALT RDPS", "Backup Ranged DPS"),
-    new RaidRole("ALT TANK", "Backup Tank"),
-    new RaidRole("ALT HEALER", "Backup Healer")
+    new RaidRole("Cro", "Necromancer Damage Dealer"),
+    new RaidRole("Backup DPS", "Backup Damage Dealer"),
+    new RaidRole("Backup MDPS", "Backup Melee Damage Dealer"),
+    new RaidRole("Backup RDPS", "Backup Ranged DPS"),
+    new RaidRole("Backup T", "Backup Tank"),
+    new RaidRole("Backup H", "Backup Healer")
 ]
 
 export {
