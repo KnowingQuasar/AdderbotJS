@@ -1,6 +1,7 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder, SlashCommandStringOption } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import { ICommand } from '../models/command';
+import { ICommand } from '../models/interfaces/icommand';
+import { raidRoles } from '../models/raid_role';
 
 class SignupCommand implements ICommand {
     info: SlashCommandBuilder;
@@ -10,16 +11,21 @@ class SignupCommand implements ICommand {
         this.info = new SlashCommandBuilder()
             .setName('signup')
             .setDescription('Sign up for a raid!');
-        // Add Options
-        this.info
-            .addStringOption(option =>
-                option.setName('role')
-                    .setDescription('The role you want to sign up for in the raid')
-                    .setRequired(true)
-                    .addChoice('DPS', 'dps')
-                    .addChoice('Ranged DPS', 'rdps')
-                    .addChoice('Melee DPS', 'mdps')
-                    .addChoice('Healer', 'h'));
+
+        const roleOption = new SlashCommandStringOption()
+            .setName('role')
+            .setDescription('The role you want to sign up for in the raid')
+            .setRequired(true);
+
+        raidRoles.forEach(raidRole => {
+            roleOption.addChoice(raidRole.description + ' (' + raidRole.name + ')', raidRole.name);
+        });
+
+        this.info.addStringOption(roleOption);
+        this.info.addStringOption(new SlashCommandStringOption()
+            .setName("emote")
+            .setDescription("Select an emote for the class you are bringing")
+            .setRequired(false));
     }
 
     public async execute(interaction: CommandInteraction) {
