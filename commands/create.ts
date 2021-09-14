@@ -63,6 +63,12 @@ class CreateCommand implements ICommand {
         timezones.forEach(timezone => {
             timezone_option.addChoice(timezone.name, timezone.abbreviation);
         });
+        this.info.addStringOption(timezone_option);
+
+        this.info.addStringOption(new SlashCommandStringOption()
+            .setName('roles')
+            .setDescription('List the roles allowed for this raid separated by a comma. For example Role 1, Role 2, Role 3')
+            .setRequired(true));
 
         this.info.addIntegerOption(new SlashCommandIntegerOption()
             .setName('melee_dps')
@@ -83,11 +89,6 @@ class CreateCommand implements ICommand {
             .setName('cro_dps')
             .setDescription('The number of necromancer DPS for the raid')
             .setRequired(false));
-            
-        this.info.addStringOption(new SlashCommandStringOption()
-            .setName('roles')
-            .setDescription('List the roles allowed for this raid separated by a comma. For example Role 1, Role 2, Role 3')
-            .setRequired(true));
     }
 
     public async execute(interaction: CommandInteraction) {

@@ -33,6 +33,29 @@ class RaidTypeKeyord {
     static rgob = 'RG Oax & Bahsei HM';
 }
 
+class RaidRoleKeyword {
+    static t = 'T';
+    static mt = 'MT';
+    static ot = 'OT';
+    static h = 'H';
+    static h1 = 'H1';
+    static h2 = 'H2';
+    static ch = 'CH';
+    static gh = 'GH';
+    static th = 'TH';
+    static kh = 'KH';
+    static dps = 'DPS';
+    static rdps = 'RDPS';
+    static mdps = 'MDPS';
+    static cro = 'CRO';
+    static backup_dps = 'BACKUP DPS';
+    static backup_mdps = 'BACKUP MDPS';
+    static backup_rdps = 'BACKUP RDPS';
+    static backup_tank = 'BACKUP TANK';
+    static backup_heal = 'BACKUP HEALER';
+    static backup_cro = 'BACKUP CRO';
+}
+
 class TimezoneKeyword {
     static eastern_std_us = 'EST';
     static central_std_us = 'CST';
@@ -48,5 +71,6 @@ export {
     RaidDifficultyKeyword,
     RaidTypeKeyord,
     TimezoneKeyword,
-    MiscKeyord
+    MiscKeyord,
+    RaidRoleKeyword
 }

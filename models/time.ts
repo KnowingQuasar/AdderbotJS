@@ -24,12 +24,13 @@ const timezones = [
 ]
 
 function get_timezone_from_str(timezone_representation: string): Timezone {
-    timezones.forEach(timezone => {
-        if (timezone.abbreviation == timezone_representation || timezone.name == timezone_representation 
-            || timezone.utc_offset == timezone_representation) {
+    for (let i = 0; i < timezones.length; i++) {
+        const timezone = timezones[i];
+        if (timezone.abbreviation === timezone_representation || timezone.name === timezone_representation 
+            || timezone.utc_offset === timezone_representation) {
             return timezone;
         }
-    });
+    }
 
     return null;
 }

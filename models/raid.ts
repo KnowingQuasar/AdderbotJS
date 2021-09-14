@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { get_timezone_from_str, Timezone } from '../models/time'
 import { MiscKeyord } from '../constants/keywords'
+import { raid_type_info } from './raid_info';
 
 class Raid {
     channelId: string;
@@ -31,7 +32,7 @@ class Raid {
             throw new Error('Please contact the developer at ' + MiscKeyord.dev_discord_name_id + ' to have your timezone added to the pick list.');
         }
 
-        
+        let x = raid_type_info[0];
     }
 }
 
