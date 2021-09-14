@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { IEvent } from "../models/interfaces/ievent";
+import { IEvent } from "../interfaces/ievent";
 
 class ReadyEvent implements IEvent {
 	name = 'ready';
@@ -10,7 +10,6 @@ class ReadyEvent implements IEvent {
 }
 
 const readyEvent = new ReadyEvent();
-
 
 export {
 	readyEvent as event

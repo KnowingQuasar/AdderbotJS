@@ -1,3 +1,7 @@
+class MiscKeyord {
+    static dev_discord_name_id = 'Quasar#0798'
+}
+
 class RaidDifficultyKeyword {
     static norm = 'N';
     static vet = 'V';
@@ -30,14 +34,19 @@ class RaidTypeKeyord {
 }
 
 class TimezoneKeyword {
-    static eastern_us = 'ET';
-    static central_us = 'CT';
-    static mountain_us = 'MT';
-    static pacific_us = 'PT';
+    static eastern_std_us = 'EST';
+    static central_std_us = 'CST';
+    static mountain_std_us = 'MST';
+    static pacific_std_us = 'PST';
+    static eastern_dst_us = 'EDT';
+    static central_dst_us = 'CDT';
+    static mountain_dst_us = 'MDT';
+    static pacific_dst_us = 'PDT';
 }
 
 export {
     RaidDifficultyKeyword,
     RaidTypeKeyord,
-    TimezoneKeyword
+    TimezoneKeyword,
+    MiscKeyord
 }

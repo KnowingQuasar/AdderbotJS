@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import { ICommand } from '../models/interfaces/icommand';
+import { ICommand } from '../interfaces/icommand';
 import { raidRoles } from '../models/raid_role';
 
 class SignupCommand implements ICommand {
@@ -18,7 +18,7 @@ class SignupCommand implements ICommand {
             .setRequired(true);
 
         raidRoles.forEach(raidRole => {
-            roleOption.addChoice(raidRole.description + ' (' + raidRole.name + ')', raidRole.name);
+            roleOption.addChoice(raidRole.name + ' (' + raidRole.abbreviation + ')', raidRole.abbreviation);
         });
 
         this.info.addStringOption(roleOption);

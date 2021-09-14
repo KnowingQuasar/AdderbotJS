@@ -1,7 +1,10 @@
 import { SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandRoleOption, SlashCommandStringOption } from '@discordjs/builders';
-import { CommandInteraction } from 'discord.js';
-import { RaidDifficultyKeyword, RaidTypeKeyord, TimezoneKeyword } from '../models/constants/keywords';
-import { ICommand } from '../models/interfaces/icommand';
+import { APIMessage } from 'discord-api-types';
+import { CommandInteraction, Message } from 'discord.js';
+import { RaidDifficultyKeyword, RaidTypeKeyord, TimezoneKeyword } from '../constants/keywords';
+import { ICommand } from '../interfaces/icommand';
+import { Raid } from '../models/raid';
+import { timezones } from '../models/time';
 
 class CreateCommand implements ICommand {
     info = new SlashCommandBuilder()
@@ -16,6 +19,7 @@ class CreateCommand implements ICommand {
             .addChoice('Veteran', RaidDifficultyKeyword.vet)
             .addChoice('Hardmode', RaidDifficultyKeyword.hm)
             .addChoice('Normal', RaidDifficultyKeyword.norm));
+
         this.info.addStringOption(new SlashCommandStringOption()
             .setName('trial')
             .setDescription('Select a trial')
@@ -41,38 +45,45 @@ class CreateCommand implements ICommand {
             .addChoice('Rockgrove', RaidTypeKeyord.rg)
             .addChoice('Rockgrove Oax HM', RaidTypeKeyord.rgo)
             .addChoice('Rockgrove Oax & Bahsei HM', RaidTypeKeyord.rgob));
+
         this.info.addStringOption(new SlashCommandStringOption()
             .setName('date')
             .setDescription('Enter a date of the format Month/Day/Year (4 digits). For example: 4/20/2069')
             .setRequired(true));
+
         this.info.addStringOption(new SlashCommandStringOption()
             .setName('time')
             .setDescription('Enter a time with am/pm, like 11pm or 7am')
             .setRequired(true));
-        this.info.addStringOption(new SlashCommandStringOption()
-            .setName('timezone')
+
+        let timezone_option = new SlashCommandStringOption();
+        timezone_option.setName('timezone')
             .setDescription('Select a timezone')
-            .setRequired(true)
-            .addChoice('Eastern Time', TimezoneKeyword.eastern_us)
-            .addChoice('Central Time', TimezoneKeyword.central_us)
-            .addChoice('Mountain Time', TimezoneKeyword.mountain_us)
-            .addChoice('Pacific Time', TimezoneKeyword.pacific_us));
+            .setRequired(true);
+        timezones.forEach(timezone => {
+            timezone_option.addChoice(timezone.name, timezone.abbreviation);
+        });
+
         this.info.addIntegerOption(new SlashCommandIntegerOption()
             .setName('melee_dps')
             .setDescription('The number of melee DPS for the raid')
-            .setRequired(true));
+            .setRequired(false));
+
         this.info.addIntegerOption(new SlashCommandIntegerOption()
             .setName('ranged_dps')
             .setDescription('The number of ranged DPS for the raid')
-            .setRequired(true));
+            .setRequired(false));
+
         this.info.addIntegerOption(new SlashCommandIntegerOption()
             .setName('flex_dps')
             .setDescription('The number of flex (ranged or melee) DPS for the raid')
-            .setRequired(true));
+            .setRequired(false));
+            
         this.info.addIntegerOption(new SlashCommandIntegerOption()
             .setName('cro_dps')
             .setDescription('The number of necromancer DPS for the raid')
-            .setRequired(true));
+            .setRequired(false));
+            
         this.info.addStringOption(new SlashCommandStringOption()
             .setName('roles')
             .setDescription('List the roles allowed for this raid separated by a comma. For example Role 1, Role 2, Role 3')
@@ -80,7 +91,13 @@ class CreateCommand implements ICommand {
     }
 
     public async execute(interaction: CommandInteraction) {
-        interaction.reply('Merri smells');
+        //let x: Message | APIMessage = await interaction.reply({ content: 'asdf', fetchReply: true });
+        const raid = new Raid(interaction.channel.id, interaction.user.id, interaction.options.get('difficulty').value as string,
+            interaction.options.get('trial').value as string, interaction.options.get('date').value as string,
+            interaction.options.get('time').value as string, interaction.options.get('timezone').value as string,
+            interaction.options.get('melee_dps').value as number, interaction.options.get('ranged_dps').value as number,
+            interaction.options.get('flex_dps').value as number, interaction.options.get('cro_dps').value as number);
+
     }
 }
 

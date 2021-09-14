@@ -1,40 +1,41 @@
 import { v5 as uuidv5 } from 'uuid';
 import { namespaceUuid } from '../config.json';
 
-class RaidRole {
+class RaidRoleInfo {
+    abbreviation: string;
     name: string;
-    description: string;
     id: string;
 
     constructor(name: string, description: string) {
-        this.name = name;
-        this.description = description;
-        this.id = uuidv5(this.name, namespaceUuid);
+        this.abbreviation = name;
+        this.name = description;
+        this.id = uuidv5(this.abbreviation, namespaceUuid);
     }
 }
 
-const raidRoles: RaidRole[] = [
-    new RaidRole("T", "Tank"),
-    new RaidRole("MT", "Main Tank"),
-    new RaidRole("OT", "Off Tank"),
-    new RaidRole("H", "Healer"),
-    new RaidRole("H1", "Healer 1"),
-    new RaidRole("H2", "Healer 2"),
-    new RaidRole("CH", "Cage Healer"),
-    new RaidRole("GH", "Group Healer"),
-    new RaidRole("KH", "Kite Healer"),
-    new RaidRole("TH", "Tank Healer"),
-    new RaidRole("DPS", "Damage Dealer"),
-    new RaidRole("RDPS", "Ranged Damage Dealer"),
-    new RaidRole("MDPS", "Melee Damage Dealer"),
-    new RaidRole("Cro", "Necromancer Damage Dealer"),
-    new RaidRole("Backup DPS", "Backup Damage Dealer"),
-    new RaidRole("Backup MDPS", "Backup Melee Damage Dealer"),
-    new RaidRole("Backup RDPS", "Backup Ranged DPS"),
-    new RaidRole("Backup T", "Backup Tank"),
-    new RaidRole("Backup H", "Backup Healer")
+const raidRoles: RaidRoleInfo[] = [
+    new RaidRoleInfo("T", "Tank"),
+    new RaidRoleInfo("MT", "Main Tank"),
+    new RaidRoleInfo("OT", "Off Tank"),
+    new RaidRoleInfo("H", "Healer"),
+    new RaidRoleInfo("H1", "Healer 1"),
+    new RaidRoleInfo("H2", "Healer 2"),
+    new RaidRoleInfo("CH", "Cage Healer"),
+    new RaidRoleInfo("GH", "Group Healer"),
+    new RaidRoleInfo("KH", "Kite Healer"),
+    new RaidRoleInfo("TH", "Tank Healer"),
+    new RaidRoleInfo("DPS", "Damage Dealer"),
+    new RaidRoleInfo("RDPS", "Ranged Damage Dealer"),
+    new RaidRoleInfo("MDPS", "Melee Damage Dealer"),
+    new RaidRoleInfo("Cro", "Necromancer Damage Dealer"),
+    new RaidRoleInfo("Backup DPS", "Backup Damage Dealer"),
+    new RaidRoleInfo("Backup MDPS", "Backup Melee Damage Dealer"),
+    new RaidRoleInfo("Backup RDPS", "Backup Ranged DPS"),
+    new RaidRoleInfo("Backup T", "Backup Tank"),
+    new RaidRoleInfo("Backup H", "Backup Healer")
 ]
 
 export {
-    raidRoles
+    raidRoles,
+    RaidRoleInfo
 }

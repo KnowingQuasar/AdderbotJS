@@ -2,7 +2,7 @@
 import { Client, Intents } from 'discord.js';
 import { token } from './config.json';
 import fs from 'fs';
-import { IEvent } from './models/interfaces/ievent';
+import { IEvent } from './interfaces/ievent';
 
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
