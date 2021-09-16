@@ -1,7 +1,8 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from '@discordjs/builders';
-import { CommandInteraction } from 'discord.js';
+import { APIMessage } from 'discord-api-types';
+import { CommandInteraction, Message } from 'discord.js';
 import { ICommand } from '../interfaces/icommand';
-import { raid_roles } from '../models/raid_role_info';
+import { raid_role_model_map } from '../models/raid_role_model';
 
 class SignupCommand implements ICommand {
     info: SlashCommandBuilder;
@@ -17,8 +18,8 @@ class SignupCommand implements ICommand {
             .setDescription('The role you want to sign up for in the raid')
             .setRequired(true);
 
-        raid_roles.forEach(raidRole => {
-            roleOption.addChoice(raidRole.name + ' (' + raidRole.abbreviation + ')', raidRole.abbreviation);
+        raid_role_model_map.forEach(raidRole => {
+            roleOption.addChoice(raidRole.name + ' (' + raidRole.abbreviation + ')', raidRole.id);
         });
 
         this.info.addStringOption(roleOption);
@@ -29,7 +30,13 @@ class SignupCommand implements ICommand {
     }
 
     public async execute(interaction: CommandInteraction) {
-        await interaction.reply('Signup!');
+        let x : Message | APIMessage = await interaction.reply({ content: 'Signup!', fetchReply: true });
+        if(x instanceof Message) {
+            x = x as Message;
+            let z = await x.channel.messages.fetch('885304382730670120');
+            let a = 'asdf';
+            let kk = await z.edit('muffin has no power over me');
+        }
     }
 }
 

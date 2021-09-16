@@ -1,17 +1,19 @@
 import dayjs from 'dayjs';
-import { get_timezone_from_str, Timezone } from '../models/time'
-import { MiscKeyord } from '../constants/keywords'
-import { raid_type_info } from './raid_info';
+import { MiscKeyword } from '../constants/keywords'
+import { generate_uuid } from '../helpers/uuid_helper';
+import { raid_model_map } from '../models/raid_model';
+import { TimezoneModel, timezone_model_map } from '../models/timezone_model';
 
 class Raid {
+    // This is the id of the message that displays the raid in the Discord channel
+    id: string;
     channelId: string;
-    messageId: string;
     lead: string;
     difficulty: string;
     trial: string;
     date: string;
     time: string;
-    timezone: Timezone;
+    timezone: TimezoneModel;
     players: any;
     headline: string;
     headline_override: boolean = false;
@@ -26,13 +28,13 @@ class Raid {
         this.date = date;
         this.time = time;
         
-        const parsed_timezone = get_timezone_from_str(timezone);
+        const parsed_timezone = timezone_model_map.get(timezone);
 
         if (parsed_timezone == null) {
-            throw new Error('Please contact the developer at ' + MiscKeyord.dev_discord_name_id + ' to have your timezone added to the pick list.');
+            throw new Error('Please contact the developer at ' + MiscKeyword.dev_discord_name_id + ' to have your timezone added to the pick list.');
         }
 
-        let x = raid_type_info[0];
+        
     }
 }
 

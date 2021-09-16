@@ -3,8 +3,9 @@ import { APIMessage } from 'discord-api-types';
 import { CommandInteraction, Message } from 'discord.js';
 import { RaidDifficultyKeyword, RaidTypeKeyord, TimezoneKeyword } from '../constants/keywords';
 import { ICommand } from '../interfaces/icommand';
-import { Raid } from '../models/raid';
-import { timezones } from '../models/time';
+import { Raid } from '../core/raid';
+import { raid_model_map } from '../models/raid_model';
+import { timezone_model_map } from '../models/timezone_model';
 
 class CreateCommand implements ICommand {
     info = new SlashCommandBuilder()
@@ -20,31 +21,14 @@ class CreateCommand implements ICommand {
             .addChoice('Hardmode', RaidDifficultyKeyword.hm)
             .addChoice('Normal', RaidDifficultyKeyword.norm));
 
-        this.info.addStringOption(new SlashCommandStringOption()
+        let raid_type_option = new SlashCommandStringOption()
             .setName('trial')
             .setDescription('Select a trial')
-            .setRequired(true)
-            .addChoice('Aetherian Archive', RaidTypeKeyord.aa)
-            .addChoice('Hel-ra Citadel', RaidTypeKeyord.hrc)
-            .addChoice('Sanctum Ophidia', RaidTypeKeyord.so)
-            .addChoice('Maw of Lorkhaj', RaidTypeKeyord.mol)
-            .addChoice('Asylum Sanctorium +0', RaidTypeKeyord.as0)
-            .addChoice('Asylum Sanctorium +1', RaidTypeKeyord.as1)
-            .addChoice('Asylum Sanctorium +2', RaidTypeKeyord.as2)
-            .addChoice('Cloudrest +0', RaidTypeKeyord.cr0)
-            .addChoice('Cloudrest +1', RaidTypeKeyord.cr1)
-            .addChoice('Cloudrest +2', RaidTypeKeyord.cr2)
-            .addChoice('Cloudrest +3', RaidTypeKeyord.cr3)
-            .addChoice('Sunspire', RaidTypeKeyord.ss)
-            .addChoice('Sunspire Lokke HM', RaidTypeKeyord.ssl)
-            .addChoice('Sunspire Yoln HM', RaidTypeKeyord.ssy)
-            .addChoice('Sunspire Lokke & Yoln HM', RaidTypeKeyord.ssly)
-            .addChoice('Kyne\'s Aegis', RaidTypeKeyord.ka)
-            .addChoice('Kyne\'s Aegis Yandir HM', RaidTypeKeyord.kay)
-            .addChoice('Kyne\'s Aegis Yandir & Vrol HM', RaidTypeKeyord.kavy)
-            .addChoice('Rockgrove', RaidTypeKeyord.rg)
-            .addChoice('Rockgrove Oax HM', RaidTypeKeyord.rgo)
-            .addChoice('Rockgrove Oax & Bahsei HM', RaidTypeKeyord.rgob));
+            .setRequired(true);
+        raid_model_map.forEach(raid_type => {
+            raid_type_option.addChoice(raid_type.name, raid_type.id);
+        });
+        this.info.addStringOption(raid_type_option);
 
         this.info.addStringOption(new SlashCommandStringOption()
             .setName('date')
@@ -60,7 +44,7 @@ class CreateCommand implements ICommand {
         timezone_option.setName('timezone')
             .setDescription('Select a timezone')
             .setRequired(true);
-        timezones.forEach(timezone => {
+        timezone_model_map.forEach(timezone => {
             timezone_option.addChoice(timezone.name, timezone.abbreviation);
         });
         this.info.addStringOption(timezone_option);
@@ -84,7 +68,7 @@ class CreateCommand implements ICommand {
             .setName('flex_dps')
             .setDescription('The number of flex (ranged or melee) DPS for the raid')
             .setRequired(false));
-            
+
         this.info.addIntegerOption(new SlashCommandIntegerOption()
             .setName('cro_dps')
             .setDescription('The number of necromancer DPS for the raid')

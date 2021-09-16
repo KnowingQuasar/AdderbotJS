@@ -1,4 +1,4 @@
-class MiscKeyord {
+class MiscKeyword {
     static dev_discord_name_id = 'Quasar#0798'
 }
 
@@ -27,7 +27,7 @@ class RaidTypeKeyord {
     static ssly = 'SS Lokke & Yoln HM';
     static ka = 'KA';
     static kay = 'KA Yandir HM';
-    static kavy = 'KA Yandir & Vrol HM';
+    static kayv = 'KA Yandir & Vrol HM';
     static rg = 'RG';
     static rgo = 'RG Oax HM';
     static rgob = 'RG Oax & Bahsei HM';
@@ -71,6 +71,6 @@ export {
     RaidDifficultyKeyword,
     RaidTypeKeyord,
     TimezoneKeyword,
-    MiscKeyord,
+    MiscKeyword,
     RaidRoleKeyword
 }
