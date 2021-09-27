@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandRoleOption, SlashCommandStringOption } from '@discordjs/builders';
 import { APIMessage } from 'discord-api-types';
-import { CommandInteraction, Message } from 'discord.js';
+import { CommandInteraction, Message, MessageEmbed } from 'discord.js';
 import { RaidDifficultyKeyword, RaidTypeKeyord, TimezoneKeyword } from '../constants/keywords';
 import { ICommand } from '../interfaces/icommand';
 import { Raid } from '../core/raid';
@@ -45,7 +45,7 @@ class CreateCommand implements ICommand {
             .setDescription('Select a timezone')
             .setRequired(true);
         timezone_model_map.forEach(timezone => {
-            timezone_option.addChoice(timezone.name, timezone.abbreviation);
+            timezone_option.addChoice(timezone.name, timezone.id);
         });
         this.info.addStringOption(timezone_option);
 
@@ -77,11 +77,26 @@ class CreateCommand implements ICommand {
 
     public async execute(interaction: CommandInteraction) {
         //let x: Message | APIMessage = await interaction.reply({ content: 'asdf', fetchReply: true });
-        const raid = new Raid(interaction.channel.id, interaction.user.id, interaction.options.get('difficulty').value as string,
+        const raid = await Raid.create(interaction.guild.roles, interaction.channel.id, interaction.user.id, interaction.options.get('difficulty').value as string,
             interaction.options.get('trial').value as string, interaction.options.get('date').value as string,
             interaction.options.get('time').value as string, interaction.options.get('timezone').value as string,
-            interaction.options.get('melee_dps').value as number, interaction.options.get('ranged_dps').value as number,
-            interaction.options.get('flex_dps').value as number, interaction.options.get('cro_dps').value as number);
+            interaction.options.get('roles').value as string, interaction.options.get('melee_dps')?.value as number, interaction.options.get('ranged_dps')?.value as number,
+            interaction.options.get('flex_dps')?.value as number, interaction.options.get('cro_dps')?.value as number);
+
+        interaction.reply(
+            {
+                content: 'Successfully created raid in this channel!'
+            }
+        );
+
+        interaction.deleteReply();
+
+        raid.id = (await interaction.channel.send(
+            {
+                content: await raid.build_discord_role_ping(interaction.guild.roles),
+                embeds: [await raid.build_embed(interaction.client.users)]
+            }
+        )).id;
 
     }
 }

@@ -1,7 +1,7 @@
 import { RaidRoleKeyword } from '../constants/keywords';
 import { generate_uuid } from '../helpers/uuid_helper';
 
-let raid_role_model_map = new Map<string, RaidRoleModel>();
+const raid_role_model_map = new Map<string, RaidRoleModel>();
 
 class RaidRoleModel {
     id: string;
@@ -27,27 +27,6 @@ class RaidRoleModel {
         });
 
         return returned_role_model;
-    }
-
-    /**
-    * generate_dps_list
-    */
-    public static generate_dps_list(melee_num: number, ranged_num: number, flex_num: number,
-        cro_num: number): RaidRoleModel[] {
-        let raid_role_dps: RaidRoleModel[] = [];
-        for (let i = 0; i < melee_num; i++) {
-            raid_role_dps.push(RaidRoleModel.find_role_by_abbreviation(RaidRoleKeyword.mdps));
-        }
-        for (let i = 0; i < ranged_num; i++) {
-            raid_role_dps.push(RaidRoleModel.find_role_by_abbreviation(RaidRoleKeyword.rdps));
-        }
-        for (let i = 0; i < flex_num; i++) {
-            raid_role_dps.push(RaidRoleModel.find_role_by_abbreviation(RaidRoleKeyword.dps));
-        }
-        for (let i = 0; i < cro_num; i++) {
-            raid_role_dps.push(RaidRoleModel.find_role_by_abbreviation(RaidRoleKeyword.cro));
-        }
-        return raid_role_dps;
     }
 }
 

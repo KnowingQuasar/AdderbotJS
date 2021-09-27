@@ -1,8 +1,10 @@
 {
   "devDependencies": {
     "@types/uuid": "^8.3.1",
+    "class-transformer": "^0.4.0",
     "dayjs": "^1.10.6",
-    "eslint": "^7.32.0"
+    "eslint": "^7.32.0",
+    "reflect-metadata": "^0.1.13"
   },
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
